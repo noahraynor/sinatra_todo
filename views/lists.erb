@@ -1,0 +1,19 @@
+<ul id="lists">
+  <% sort_lists(@lists).each do |list| %>
+    <% if list_complete(list) == "complete" && !list[:todos].empty? %>
+      <%= '<li class="complete">' %>
+    <% else %>
+      <%= '<li>' %>
+    <% end %>
+        <a>
+          <h2><a href="/lists/<%= list[:num] %>"><%= list[:name] %></a></h2>
+              <% ratio = todo_ratio(list) %>
+              <p><%= "#{ratio[0]}/#{ratio[1]}" %></p>
+
+        </a>
+      </li>
+  <% end %>
+</ul>
+<% content_for :header_links do %>
+  <a class="add" href="/lists/new">New List</a>
+<% end %>

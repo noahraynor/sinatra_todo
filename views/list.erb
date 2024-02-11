@@ -1,0 +1,68 @@
+<section id="todos" class="<%= list_complete(@list) %>">
+  <header>
+    <h2><%= @list[:name] %></h2>
+    <ul>
+      <li>
+        <form action="/lists/<%= @list_num %>/all" method="post">
+          <button class="check" type="submit">Complete All</button>
+        </form>
+      </li>
+      <li>
+        <a class="edit" href="/lists/<%= @list_num %>/edit">Edit</a>
+      </li>
+    </ul>
+  </header>
+
+  <ul>
+    <% @list[:todos].select {|todo| !todo[:complete]}.each do |todo| %>
+      <li>
+        <form action="/lists/<%= @list_num %>/<%= todo[:num] %>/complete" method="post" class="check">
+          <input type="hidden" name="completed" value="true" />
+          <button type="submit">Complete</button>
+        </form>
+        <h3>
+          <%= todo[:name] %>
+        </h3>
+        <form action="/lists/<%= @list_num %>/<%= todo[:num] %>/delete" method="post" class="delete">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% end %>
+
+    <% @list[:todos].select {|todo| todo[:complete]}.each do |todo| %>
+      <li class="complete">
+        <form action="/lists/<%= @list_num %>/<%= todo[:num] %>/complete" method="post" class="check">
+          <input type="hidden" name="completed" value="false" />
+          <button type="submit">Complete</button>
+        </form>
+        <h3>
+          <%= todo[:name] %>
+        </h3>
+        <form action="/lists/<%= @list_num %>/<%= todo[:num] %>/delete" method="post" class="delete">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<% content_for :header_links do %>
+  <a class="list" href="/lists">All Lists</a>
+<% end %>
+
+<form action="/lists/<%= @list_num %>/addtodo" method="post">
+  <dl>
+    <dt>
+      <label for="todo_name">Enter the name for your new todo:</label>
+    </dt>
+    <dd>
+      <input name="todo_name" id="todo" placeholder="Enter a todo" type="text" value="">
+    </dd>
+  </dl>
+  <fieldset class="actions">
+    <input type="submit" value="Add">
+  </fieldset>
+</form>
+
+
+

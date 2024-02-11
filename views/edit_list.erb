@@ -1,0 +1,27 @@
+<section id="todos">
+  <header>
+    <h2>Editing "<%= session[:lists][get_list_index(@list_num)][:name] %>"</h2>
+    <ul>
+      <li>
+        <form action="/lists/<%= @list_num %>/delete" method="post">
+          <button type="submit" class="delete">Delete List</button>
+        </form>
+      </li>
+    </ul>
+  </header>
+</section>
+
+<form action="/lists/<%= @list_num %>" method="post">
+  <dl>
+    <dt>
+      <label for="list_name">Enter new list name: </label>
+    </dt>
+    <dd>
+      <input name="list_name" placeholder="List name" type="text" value="<%= params[:list_name] || session[:lists][get_list_index(@list_num)][:name] %>">
+    </dd>
+  </dl>
+  <fieldset class="actions">
+    <input type="submit" value="Save">
+    <a href="/lists/@list_num">Cancel</a>
+  </fieldset>
+</form>
